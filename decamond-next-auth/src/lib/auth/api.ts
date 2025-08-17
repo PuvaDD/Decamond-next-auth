@@ -7,14 +7,12 @@ type LoginError = { error: string };
 
 type VerifyLoginResult = LoginSuccess | LoginError;
 
-const URL_VERIFY_LOGIN = "https://randomuser.me/api/?results=1&nat=us";
-
 export async function VerifyLogin(
   formData: FormData
   //TODO: Maybe fix "results" type
 ): Promise<VerifyLoginResult> {
   try {
-    const res = await fetch(URL_VERIFY_LOGIN, {
+    const res = await fetch(process.env.NEXT_PUBLIC_LOGIN_API, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

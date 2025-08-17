@@ -1,10 +1,10 @@
 "use client";
 
 import { useDashboardContext } from "@/components/contexts/DashboardContext";
+import { globalPrefix } from "@/lib/utils/globalUtils";
 import { isEmpty } from "ramda";
 
 import Image from "next/image";
-import { globalPrefix } from "@/lib/utils/globalUtils";
 
 export default function DashboardPage() {
   const dashboardCTX = useDashboardContext();
