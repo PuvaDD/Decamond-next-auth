@@ -6,7 +6,7 @@ import {
   AUTH_COOKIE_NAME,
   LoginFormErrors,
   LoginResult,
-} from "../utils/utils";
+} from "../utils/authPageUtils";
 import { redirect, RedirectType } from "next/navigation";
 import { validateLoginForm } from "../utils/loginFormSchema";
 import { VerifyLogin } from "./api";

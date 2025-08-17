@@ -1,11 +1,11 @@
 "use client";
 
 import {
-  LoginResult,
   PASSWORD_INPUT_NAME,
   PHONE_NUMBER_INP_NAME,
-} from "@/lib/utils/utils";
+} from "@/lib/utils/loginFormSchema";
 import { useActionState, useEffect, useState } from "react";
+import { LoginResult } from "@/lib/utils/authPageUtils";
 import { Login } from "@/lib/auth/actions";
 
 import Form from "next/form";

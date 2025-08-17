@@ -1,5 +1,5 @@
 import { DashboardProvider } from "@/components/contexts/DashboardContext";
-import { AUTH_COOKIE_NAME } from "@/lib/utils/utils";
+import { AUTH_COOKIE_NAME } from "@/lib/utils/authPageUtils";
 import { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";

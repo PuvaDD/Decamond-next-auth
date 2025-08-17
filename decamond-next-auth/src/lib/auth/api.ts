@@ -1,6 +1,6 @@
 "use server";
 
-import { FAILED_LOGIN_MESSAGE } from "../utils/utils";
+import { FAILED_LOGIN_MESSAGE } from "../utils/authPageUtils";
 
 type LoginSuccess = { results: any }; //TODO: Maybe change "any" type
 type LoginError = { error: string };
