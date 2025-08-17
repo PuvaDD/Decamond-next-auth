@@ -2,32 +2,43 @@
 
 import {
   FAILED_LOGIN_MESSAGE,
-  PASSWORD_INPUT_NAME,
-  PHONE_NUMBER_INP_NAME,
-} from "../utils";
+  LoginFormErrors,
+  LoginResult,
+} from "../utils/utils";
 import { redirect, RedirectType } from "next/navigation";
+import { validateLoginForm } from "../utils/loginFormSchema";
 import { VerifyLogin } from "./api";
 import { isNil } from "ramda";
 
-type LoginState = { error?: string };
-
 //TODO: Relocate prevState
-export async function Login(formData: FormData): Promise<LoginState> {
-  console.log("FD = ", formData);
-  const phoneNumber = formData.get(PHONE_NUMBER_INP_NAME);
-  const password = formData.get(PASSWORD_INPUT_NAME);
+export async function Login(formData: FormData): Promise<LoginResult> {
+  // FormData validation
+  const formDataValidationStatus = validateLoginForm(formData);
 
-  if (!phoneNumber) return { error: "Incorrect Phone Number" };
-  if (!password) return { error: "Incorrect Password" };
+  if (!formDataValidationStatus.success) {
+    console.log("zod valdiation error = ", formDataValidationStatus.errors);
+    return {
+      success: false,
+      errors: formDataValidationStatus.errors as LoginFormErrors,
+    };
+  }
 
-  const loginStatus = await VerifyLogin(+phoneNumber, `${password}`);
+  // Check Login Status
+  const loginStatus = await VerifyLogin(formData);
 
+  // TODO: Find a better way to handle this string check
   if ("error" in loginStatus) {
-    return { error: loginStatus.error };
+    return {
+      success: false,
+      errors: { formErrors: [loginStatus.error], fieldErrors: {} },
+    };
   }
 
   if (isNil(loginStatus) || isNil(loginStatus.results))
-    return { error: FAILED_LOGIN_MESSAGE };
+    return {
+      success: false,
+      errors: { formErrors: [FAILED_LOGIN_MESSAGE], fieldErrors: {} },
+    };
 
   // TODO: Add auth cookie
   redirect("/dashboard", RedirectType.replace);

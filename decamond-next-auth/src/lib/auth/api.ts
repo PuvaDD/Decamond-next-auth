@@ -1,8 +1,8 @@
 "use server";
 
-import { FAILED_LOGIN_MESSAGE } from "../utils";
+import { FAILED_LOGIN_MESSAGE } from "../utils/utils";
 
-type LoginSuccess = { results: any };
+type LoginSuccess = { results: any }; //TODO: Maybe change "any" type
 type LoginError = { error: string };
 
 type VerifyLoginResult = LoginSuccess | LoginError;
@@ -10,8 +10,7 @@ type VerifyLoginResult = LoginSuccess | LoginError;
 const URL_VERIFY_LOGIN = "https://randomuser.me/api/?results=1&nat=us";
 
 export async function VerifyLogin(
-  phoneNumber: number,
-  password: string
+  formData: FormData
   //TODO: Maybe fix "results" type
 ): Promise<VerifyLoginResult> {
   try {
