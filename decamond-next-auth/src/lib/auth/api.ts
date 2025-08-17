@@ -1,0 +1,35 @@
+"use server";
+
+import { FAILED_LOGIN_MESSAGE } from "../utils";
+
+type LoginSuccess = { results: any };
+type LoginError = { error: string };
+
+type VerifyLoginResult = LoginSuccess | LoginError;
+
+const URL_VERIFY_LOGIN = "https://randomuser.me/api/?results=1&nat=us";
+
+export async function VerifyLogin(
+  phoneNumber: number,
+  password: string
+  //TODO: Maybe fix "results" type
+): Promise<VerifyLoginResult> {
+  try {
+    const res = await fetch(URL_VERIFY_LOGIN, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) throw new Error(FAILED_LOGIN_MESSAGE);
+
+    const response = await res.json();
+
+    return response;
+  } catch (error) {
+    return {
+      error: (error instanceof Error && error.message) || FAILED_LOGIN_MESSAGE,
+    };
+  }
+}
