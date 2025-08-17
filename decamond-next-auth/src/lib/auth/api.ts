@@ -1,6 +1,11 @@
 "use server";
 
-import { FAILED_LOGIN_MESSAGE } from "../utils/authPageUtils";
+import {
+  AUTH_COOKIE_AGE_IN_MILLISECONDS,
+  AUTH_COOKIE_NAME,
+  FAILED_LOGIN_MESSAGE,
+} from "../utils/authPageUtils";
+import { cookies } from "next/headers";
 
 type LoginSuccess = { results: any }; //TODO: Maybe change "any" type
 type LoginError = { error: string };
@@ -22,6 +27,21 @@ export async function VerifyLogin(
     if (!res.ok) throw new Error(FAILED_LOGIN_MESSAGE);
 
     const response = await res.json();
+
+    // Create Auth Cookie
+    const cookieStore = await cookies();
+
+    cookieStore.set(
+      AUTH_COOKIE_NAME,
+      JSON.stringify({ user: response.results[0] }),
+      {
+        secure: true,
+        httpOnly: true,
+        path: "/",
+        maxAge: AUTH_COOKIE_AGE_IN_MILLISECONDS,
+        sameSite: "strict",
+      }
+    );
 
     return response;
   } catch (error) {
