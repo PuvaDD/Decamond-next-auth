@@ -10,9 +10,9 @@ export const AUTH_COOKIE_AGE_IN_MILLISECONDS = 10 * 60 * 1000;
 
 export type LoginFormErrors = z.ZodFlattenedError<LoginFormData>;
 export type LoginFormData = z.infer<typeof loginFormSchema>;
-export type LoginResult =
-  | { success: true; data: LoginFormData }
-  | {
-      success: false;
-      errors: LoginFormErrors;
-    };
+export type SuccessfulLoginResult = { success: true; data: LoginFormData };
+export type FailedLoginResult = {
+  success: false;
+  errors: LoginFormErrors;
+};
+export type LoginResult = SuccessfulLoginResult | FailedLoginResult;
