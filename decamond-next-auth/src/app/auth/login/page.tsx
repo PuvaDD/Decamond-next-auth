@@ -9,6 +9,7 @@ import { LoginResult } from "@/lib/utils/authPageUtils";
 import { Login } from "@/lib/auth/actions";
 
 import Form from "next/form";
+import styles from "./login.module.scss";
 
 const initialState: LoginResult = {
   success: false,
@@ -29,26 +30,28 @@ export default function LoginPage() {
   }, [authState]);
 
   return (
-    <Form action={loginAction}>
-      <div>Login Page</div>
-      <input
-        placeholder="Phone Number"
-        name={PHONE_NUMBER_INP_NAME}
-        value={phoneNumber}
-        onChange={(e) => setPhoneNumber(e.target.value)}
-      />
-      <input
-        placeholder="Password"
-        name={PASSWORD_INPUT_NAME}
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button>Login</button>
-      {!authState.success &&
-        authState.errors &&
-        authState.errors.formErrors.length > 0 && (
-          <div>{authState.errors.formErrors[0]}</div>
-        )}
+    <Form action={loginAction} className={styles["login-form-wrapper"]}>
+      <header>Login Page</header>
+      <div className={styles["inputs-wrapper"]}>
+        <input
+          placeholder="Phone Number"
+          name={PHONE_NUMBER_INP_NAME}
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+        />
+        <input
+          placeholder="Password"
+          name={PASSWORD_INPUT_NAME}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button>Login</button>
+        {!authState.success &&
+          authState.errors &&
+          authState.errors.formErrors.length > 0 && (
+            <div>{authState.errors.formErrors[0]}</div>
+          )}
+      </div>
     </Form>
   );
 }
