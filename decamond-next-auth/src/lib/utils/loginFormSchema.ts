@@ -1,13 +1,13 @@
 import { FormValidationStatus } from "./zodSchemaValidationTypes";
 import { isEmpty, isNil } from "ramda";
-import { globalPrefix } from "./globalUtils";
+import { GLOBAL_PREFIX } from "./globalUtils";
 
 import extractFormDataValues from "./extractFormDataValues";
 
 import z from "zod";
 
-export const PHONE_NUMBER_INP_NAME = `${globalPrefix}auth-phone-number`;
-export const PASSWORD_INPUT_NAME = `${globalPrefix}auth-password`;
+export const PHONE_NUMBER_INP_NAME = `${GLOBAL_PREFIX}auth-phone-number`;
+export const PASSWORD_INPUT_NAME = `${GLOBAL_PREFIX}auth-password`;
 
 const PHONE_NUM_LENGTH = 11;
 const MIN_PASSWORD_LENGTH = 4;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useDashboardContext } from "@/components/contexts/DashboardContext";
-import { globalPrefix } from "@/lib/utils/globalUtils";
+import { GLOBAL_PREFIX } from "@/lib/utils/globalUtils";
 import { isEmpty } from "ramda";
 import { Logout } from "@/lib/auth/actions";
 
@@ -24,7 +24,7 @@ export default function DashboardPage() {
             src={user.picture.large}
             width={250}
             height={250}
-            alt={`${globalPrefix}profile-picture`}
+            alt={`${GLOBAL_PREFIX}profile-picture`}
           />
 
           <div>
