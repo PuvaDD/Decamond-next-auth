@@ -18,7 +18,6 @@ export async function Login(formData: FormData): Promise<LoginResult> {
   const formDataValidationStatus = validateLoginForm(formData);
 
   if (!formDataValidationStatus.success) {
-    console.log("zod valdiation error = ", formDataValidationStatus.errors);
     return {
       success: false,
       errors: formDataValidationStatus.errors as LoginFormErrors,
