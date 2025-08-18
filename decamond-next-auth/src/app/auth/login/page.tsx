@@ -4,12 +4,17 @@ import {
   PASSWORD_INPUT_NAME,
   PHONE_NUMBER_INP_NAME,
 } from "@/lib/utils/loginFormSchema";
-import { useActionState, useEffect, useState } from "react";
-import { LoginResult } from "@/lib/utils/authPageUtils";
+import { ChangeEvent, useActionState, useEffect, useState } from "react";
+import { FailedLoginResult, LoginResult } from "@/lib/utils/authPageUtils";
 import { Login } from "@/lib/auth/actions";
 
-import Form from "next/form";
+import InputFormControl from "@/components/InputFormControl";
+import TextInput from "@/components/textInput";
 import styles from "./login.module.scss";
+import Form from "next/form";
+
+const phoneNumberInpID = "login-phone-num-inp";
+const passwordInpID = "login-password-inp";
 
 const initialState: LoginResult = {
   success: false,
@@ -24,28 +29,59 @@ export default function LoginPage() {
     initialState
   );
 
-  useEffect(() => {
-    console.log("authState = ", authState);
-    console.log("\n\n<========================>\n\n");
-  }, [authState]);
+  const phoneNumInpErrors = (
+    authState as FailedLoginResult
+  )?.errors?.fieldErrors?.[PHONE_NUMBER_INP_NAME]?.join(" | ");
+
+  const passwordInpErrors = (
+    authState as FailedLoginResult
+  )?.errors?.fieldErrors[PASSWORD_INPUT_NAME]?.join(" | ");
+
+  const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
+    // TODO: Programmatically prevent falsy values from being set
+    setPhoneNumber(e.target.value);
+  };
+
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    // TODO: Programmatically prevent falsy values from being set
+    setPassword(e.target.value);
+  };
 
   return (
     <Form action={loginAction} className={styles["login-form-wrapper"]}>
       <header>Login Page</header>
+
       <div className={styles["inputs-wrapper"]}>
-        <input
-          placeholder="Phone Number"
-          name={PHONE_NUMBER_INP_NAME}
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-        />
-        <input
-          placeholder="Password"
-          name={PASSWORD_INPUT_NAME}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <InputFormControl
+          id={phoneNumberInpID}
+          labels={{ tl: "Phone Number" }}
+          error={phoneNumInpErrors}
+        >
+          <TextInput
+            id={phoneNumberInpID}
+            placeholder="eg: 09123456789"
+            name={PHONE_NUMBER_INP_NAME}
+            value={phoneNumber}
+            onChange={handlePhoneNumberChange}
+          />
+        </InputFormControl>
+
+        <InputFormControl
+          id={passwordInpID}
+          labels={{ tl: "Password" }}
+          error={passwordInpErrors}
+        >
+          <TextInput
+            id={passwordInpID}
+            placeholder="Password"
+            name={PASSWORD_INPUT_NAME}
+            value={password}
+            onChange={handlePasswordChange}
+          />
+        </InputFormControl>
+
         <button>Login</button>
+
         {!authState.success &&
           authState.errors &&
           authState.errors.formErrors.length > 0 && (
