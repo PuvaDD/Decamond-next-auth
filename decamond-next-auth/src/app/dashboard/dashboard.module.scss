@@ -1,0 +1,28 @@
+@use "../mixins.scss" as g;
+
+.wrapper {
+  @include g.flex-col-centered;
+  height: 100%;
+  width: 100%;
+  padding: 4rem;
+  gap: 2rem;
+
+  h1 {
+    text-align: center;
+  }
+
+  section {
+    @include g.flex-col-centered;
+    gap: 0.8rem;
+
+    img {
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    & > div {
+      @include g.flex-row-centered;
+      gap: 0.5rem;
+    }
+  }
+}
