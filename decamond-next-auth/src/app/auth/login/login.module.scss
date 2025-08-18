@@ -14,11 +14,28 @@
   button {
     height: var(--input-height);
   }
+
+  input,
+  button {
+    width: 300px;
+  }
+
+  @media screen and (max-width: 576px) {
+    width: 90%;
+    padding: 10%;
+
+    input,
+    button {
+      width: 100% !important;
+    }
+  }
 }
 
 .inputs-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  @include g.flex-col-centered;
   gap: 0.6rem;
+
+  label {
+    width: 100%;
+  }
 }
