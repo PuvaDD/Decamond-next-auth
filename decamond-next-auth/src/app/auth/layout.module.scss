@@ -1,0 +1,7 @@
+@use "../mixins.scss" as g;
+
+.auth-page-wrapper {
+  @include g.flex-row-centered;
+  height: 100%;
+  width: 100%;
+}

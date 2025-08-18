@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
 
+import styles from "./layout.module.scss";
+
 export const metadata: Metadata = {
   title: "Login - Decamond Next.js auth interview project",
   description: "Login to access your dashboard and manage your account",
@@ -27,5 +29,5 @@ export default async function AuthPageLayout({
 
   if (authCookie) return pushToDashboard();
 
-  return <>{children}</>;
+  return <div className={styles["auth-page-wrapper"]}>{children}</div>;
 }
