@@ -3,6 +3,7 @@
 import { useDashboardContext } from "@/components/contexts/DashboardContext";
 import { globalPrefix } from "@/lib/utils/globalUtils";
 import { isEmpty } from "ramda";
+import { Logout } from "@/lib/auth/actions";
 
 import Image from "next/image";
 import styles from "./dashboard.module.scss";
@@ -37,6 +38,8 @@ export default function DashboardPage() {
           </div>
         </section>
       )}
+
+      <button onClick={Logout}>Log Out</button>
     </div>
   );
 }
