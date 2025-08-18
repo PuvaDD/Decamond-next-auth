@@ -23,7 +23,10 @@ export const loginFormSchema = z.object({
     .string()
     .trim()
     .min(MIN_PASSWORD_LENGTH, `Must be at least ${MIN_PASSWORD_LENGTH} digits`)
-    .max(MAX_PASSWORD_LENGTH, `Must be at least ${MAX_PASSWORD_LENGTH} digits`),
+    .max(
+      MAX_PASSWORD_LENGTH,
+      `Can't be more than ${MAX_PASSWORD_LENGTH} digits`
+    ),
 });
 
 export function validateLoginForm(formData: FormData): FormValidationStatus {
