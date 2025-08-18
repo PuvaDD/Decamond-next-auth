@@ -39,6 +39,7 @@ export default function LoginPage() {
   )?.errors?.fieldErrors[PASSWORD_INPUT_NAME]?.join(" | ");
 
   const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (pending) return;
     // TODO: Programmatically prevent falsy values from being set
     const value = e.target.value;
     const isValid = NUMBER_ONLY_REGEX.test(value);
@@ -47,6 +48,7 @@ export default function LoginPage() {
   };
 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (pending) return;
     // TODO: Programmatically prevent falsy values from being set
     setPassword(e.target.value);
   };
@@ -68,6 +70,7 @@ export default function LoginPage() {
             value={phoneNumber}
             onChange={handlePhoneNumberChange}
             type="tel"
+            disabled={pending}
           />
         </InputFormControl>
 
@@ -83,10 +86,11 @@ export default function LoginPage() {
             value={password}
             onChange={handlePasswordChange}
             type="text"
+            disabled={pending}
           />
         </InputFormControl>
 
-        <button>Login</button>
+        <button>{pending ? "Submitting..." : "Login"}</button>
 
         {!authState.success &&
           authState.errors &&
