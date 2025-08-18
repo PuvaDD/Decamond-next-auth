@@ -4,8 +4,9 @@ import {
   PASSWORD_INPUT_NAME,
   PHONE_NUMBER_INP_NAME,
 } from "@/lib/utils/loginFormSchema";
-import { ChangeEvent, useActionState, useEffect, useState } from "react";
+import { ChangeEvent, useActionState, useState } from "react";
 import { FailedLoginResult, LoginResult } from "@/lib/utils/authPageUtils";
+import { NUMBER_ONLY_REGEX } from "@/lib/utils/globalUtils";
 import { Login } from "@/lib/auth/actions";
 
 import InputFormControl from "@/components/InputFormControl";
@@ -39,7 +40,10 @@ export default function LoginPage() {
 
   const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
     // TODO: Programmatically prevent falsy values from being set
-    setPhoneNumber(e.target.value);
+    const value = e.target.value;
+    const isValid = NUMBER_ONLY_REGEX.test(value);
+
+    isValid && setPhoneNumber(value);
   };
 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +67,7 @@ export default function LoginPage() {
             name={PHONE_NUMBER_INP_NAME}
             value={phoneNumber}
             onChange={handlePhoneNumberChange}
+            type="tel"
           />
         </InputFormControl>
 
@@ -77,6 +82,7 @@ export default function LoginPage() {
             name={PASSWORD_INPUT_NAME}
             value={password}
             onChange={handlePasswordChange}
+            type="text"
           />
         </InputFormControl>
 
